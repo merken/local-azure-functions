@@ -1,0 +1,6 @@
+POST  http://127.0.0.1:8080/api/Http
+Content-Type: application/json
+
+{
+    "name":"Maarten"
+}
