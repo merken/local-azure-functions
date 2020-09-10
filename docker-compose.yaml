@@ -7,7 +7,6 @@ services:
         ports:
             - 10000:10000
             - 10001:10001
-            - 10002:10002
 
     local.functions:
         container_name: local.functions
