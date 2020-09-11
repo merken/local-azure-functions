@@ -20,10 +20,10 @@ namespace Local.Functions
         {
             log.LogInformation($"Received blob {System.Environment.GetEnvironmentVariable("BlobContainerName")}: {filename}");
 
-            var copyFileName = $"{Path.GetFileNameWithoutExtension(filename)}.copy.{Path.GetExtension(filename)}";
+            var copyFileName = $"{Path.GetFileNameWithoutExtension(filename)}.copy{Path.GetExtension(filename)}";
             log.LogInformation($"Copying blob to {System.Environment.GetEnvironmentVariable("BlobOutputContainerName")}: {copyFileName}");
 
-            var copy = outputContainer.GetBlockBlobReference($"{Path.GetFileNameWithoutExtension(filename)}.copy.{Path.GetExtension(filename)}");
+            var copy = outputContainer.GetBlockBlobReference(copyFileName);
             await copy.UploadFromStreamAsync(blob);
 
             log.LogInformation($"Copied blob {copyFileName}");
