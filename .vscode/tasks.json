@@ -1,0 +1,68 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "clean",
+			"command": "dotnet",
+			"args": [
+				"clean",
+				"/property:GenerateFullPaths=true",
+				"/consoleloggerparameters:NoSummary"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}/src/Local.Functions"
+			},
+			"type": "process",
+			"problemMatcher": "$msCompile"
+		},
+		{
+			"label": "build",
+			"command": "dotnet",
+			"args": [
+				"build",
+				"/property:GenerateFullPaths=true",
+				"/consoleloggerparameters:NoSummary"
+			],
+			"type": "process",
+			"dependsOn": "clean",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"options": {
+				"cwd": "${workspaceFolder}/src/Local.Functions"
+			},
+			"problemMatcher": "$msCompile"
+		},
+		{
+			"label": "publish",
+			"command": "dotnet",
+			"args": [
+				"publish",
+				"--configuration",
+				"Release",
+				"/property:GenerateFullPaths=true",
+				"/consoleloggerparameters:NoSummary"
+			],
+			"type": "process",
+			"dependsOn": "clean release",
+			"problemMatcher": "$msCompile"
+		},
+		{
+			"label": "run-storage-emulator",
+			"type": "shell",
+			"command": "docker start local.storage.emulator",
+			"dependsOn": "build",
+		},
+		{
+			"type": "func",
+			"dependsOn": ["run-storage-emulator"],
+			"options": {
+				"cwd": "${workspaceFolder}/src/Local.Functions/bin/Debug/netcoreapp3.1"
+			},
+			"command": "host start",
+			"isBackground": true,
+			"problemMatcher": "$func-watch"
+		}
+	]
+}
